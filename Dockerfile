@@ -50,7 +50,6 @@ RUN R CMD javareconf
 RUN wget http://download2.rstudio.org/rstudio-server-0.98.507-x86_64.rpm
 RUN yum install -y --nogpgcheck rstudio-server-0.98.507-x86_64.rpm
 
-RUN echo "hello"
 RUN yum install -y curl-devel
 ADD files/sparkInstall.R /tmp/sparkInstall.R
 RUN R --vanilla --slave < /tmp/sparkInstall.R

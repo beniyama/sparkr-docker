@@ -1,4 +1,4 @@
-FROM centos
+FROM centos:centos6
 MAINTAINER Tetsuo Yamabe
 
 # Timezone settings
@@ -7,8 +7,8 @@ RUN echo 'LANG="ja_JP.UTF-8"' > /etc/sysconfig/i18n ;echo 'ZONE="Asia/Tokyo"' > 
 
 # Add Epel repository
 
-RUN rpm --import http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/RPM-GPG-KEY-EPEL-6
-RUN rpm -Uvh http://ftp-srv2.kddilabs.jp/Linux/distributions/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+RUN rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6
+RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm 
 
 # Add Remi repository
 
@@ -28,16 +28,16 @@ RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
 # Misc packages
 
 RUN yum groupinstall -y "Development Tools"
-RUN yum --enablerepo=epel install -y rsyslog wget sudo;
-RUN yum install -y java-1.7.0-openjdk-devel
+RUN yum --enablerepo=epel install -y rsyslog wget sudo
+RUN yum install -y java-1.7.0-openjdk-devel tar
 RUN yum --enablerepo=rpmforge-extras install -y git
 
 # Fetch and build Spark package
 
 WORKDIR /home/root
-RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-0.9.1.tgz
-RUN tar xvfz spark-0.9.1.tgz
-WORKDIR /home/root/spark-0.9.1
+RUN wget http://d3kbcqa49mib13.cloudfront.net/spark-1.1.1.tgz
+RUN tar zxvf spark-1.1.1.tgz
+WORKDIR /home/root/spark-1.1.1
 RUN sbt/sbt assembly
 
 # Install SparkR
@@ -47,8 +47,10 @@ RUN yum install -y R
 RUN wget http://cran.r-project.org/src/contrib/rJava_0.9-6.tar.gz
 RUN R CMD INSTALL rJava_0.9-6.tar.gz
 RUN R CMD javareconf
-RUN wget http://download2.rstudio.org/rstudio-server-0.98.507-x86_64.rpm
-RUN yum install -y --nogpgcheck rstudio-server-0.98.507-x86_64.rpm
+
+RUN yum install -y openssl098e 
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.1091-x86_64.rpm
+RUN yum install -y --nogpgcheck rstudio-server-0.98.1091-x86_64.rpm
 
 RUN yum install -y curl-devel
 ADD files/sparkInstall.R /tmp/sparkInstall.R

@@ -7,11 +7,17 @@ This dockerfile builds a centos-based docker image with [Apache Spark](http://sp
 
 Since I'm located in Japan, the Dockerfile uses Asia/Tokyo timezone and Japanese mirror sites to fetch yum packages. If you want to ignore the settings, just replace repository paths for your region.  
 
-### How to build & run
+### Fetch ready-to-go image from Docker Hub
+```
+$ docker pull beniyama/sparkr-docker
+$ docker run -d -p <YOUR PORT>:8787 -t beniyama/sparkr-docker
+```
+
+### Or you may build & run from scratch
 ```
 $ cd sparkr-docker
-$ docker build -t sparkr .
-$ docker run -d -p <YOUR PORT>:8787 -t sparkr
+$ docker build -t beniyama/sparkr-docker .
+$ docker run -d -p <YOUR PORT>:8787 -t beniyama/sparkr-docker
 ```
 
 Then access `http://localhost:<YOUR PORT>` with your browser and login RStudio. Default RStudio login account is *rstudio/rstudio* .

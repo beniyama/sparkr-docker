@@ -1,9 +1,10 @@
 FROM centos:centos6
 MAINTAINER Tetsuo Yamabe
 
+RUN yum reinstall -y glibc-common
 RUN yum install -y locales java-1.7.0-openjdk-devel tar
 
-RUN locale-gen en_US.UTF-8  
+RUN echo 'LANG="en_US.UTF-8"' >> /etc/sysconfig/i18n
 ENV LANG en_US.UTF-8  
 ENV LANGUAGE en_US:en  
 ENV LC_ALL en_US.UTF-8

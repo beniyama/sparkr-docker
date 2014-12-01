@@ -3,9 +3,9 @@ sparkr-docker
 
 A Dockerfile to try out [SparkR](http://amplab-extras.github.io/SparkR-pkg/) with [RStudio](https://www.rstudio.com/) frontend.
 
-This dockerfile builds a centos-based docker image with [Apache Spark](http://spark.apache.org/), [SparkR](http://amplab-extras.github.io/SparkR-pkg/), and [RStudio](https://www.rstudio.com/). 
+This dockerfile builds a centos-based (CentOS 6) docker image with [Apache Spark](http://spark.apache.org/), [SparkR](http://amplab-extras.github.io/SparkR-pkg/), and [RStudio](https://www.rstudio.com/). 
 
-Since I'm located in Japan, the Dockerfile uses Asia/Tokyo timezone and Japanese mirror sites to fetch yum packages. If you want to ignore the settings, just replace repository paths for your region.  
+The prebuilt image in [Docker Hub](https://hub.docker.com/) would save your time as spark build often takes long time.
 
 ### Fetch ready-to-go image from Docker Hub
 ```
@@ -20,7 +20,15 @@ $ docker build -t beniyama/sparkr-docker .
 $ docker run -d -p <YOUR PORT>:8787 -t beniyama/sparkr-docker
 ```
 
-Then access `http://localhost:<YOUR PORT>` with your browser and login RStudio. Default RStudio login account is *rstudio/rstudio* .
+Don't forget to check your boot2docker vm IP as above port forwarding links the container's one to the vm, not your (host) machine.
+
+```
+$ boot2docker ip
+
+The VM's Host only interface IP address is: 192.168.59.103
+```
+
+Then access `http://192.168.59.103:<YOUR PORT>` with your browser and login RStudio. Default RStudio login account is *rstudio/rstudio* .
 
 Now you can load SparkR library to your R environment and start fancy things.
 

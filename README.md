@@ -5,7 +5,7 @@ A Dockerfile to try out [SparkR](http://amplab-extras.github.io/SparkR-pkg/) wit
 
 This dockerfile builds a centos-based (CentOS 6) docker image with [Apache Spark (1.1.0)](http://spark.apache.org/), [SparkR](http://amplab-extras.github.io/SparkR-pkg/), and [RStudio](https://www.rstudio.com/). 
 
-The prebuilt image in [Docker Hub](https://hub.docker.com/) would save your time as spark build often takes long time.
+The prebuilt image in [Docker Hub](https://registry.hub.docker.com/u/beniyama/sparkr-docker/) would save your time as spark build often takes long time.
 
 ### Fetch ready-to-go image from Docker Hub
 ```

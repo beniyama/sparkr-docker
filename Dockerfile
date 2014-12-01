@@ -1,9 +1,12 @@
 FROM centos:centos6
 MAINTAINER Tetsuo Yamabe
 
-# Timezone settings
+RUN yum install -y locales java-1.7.0-openjdk-devel tar
 
-RUN echo 'LANG="ja_JP.UTF-8"' > /etc/sysconfig/i18n ;echo 'ZONE="Asia/Tokyo"' > /etc/sysconfig/clock ;cp -a /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+RUN locale-gen en_US.UTF-8  
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
 
 # Add Epel repository
 
@@ -20,16 +23,10 @@ RUN rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 RUN rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
 RUN rpm -Uvh http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
 
-# Use fastest mirror first, with Japanese repositories
-
-RUN yum install -y yum-plugin-fastestmirror
-RUN echo "include_only=.jp" >> /etc/yum/pluginconf.d/fastestmirror.conf
-
 # Misc packages
 
 RUN yum groupinstall -y "Development Tools"
 RUN yum --enablerepo=epel install -y rsyslog wget sudo
-RUN yum install -y java-1.7.0-openjdk-devel tar
 RUN yum --enablerepo=rpmforge-extras install -y git
 
 # Fetch and build Spark package
